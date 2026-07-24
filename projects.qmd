@@ -10,7 +10,15 @@ Here are my research projects and work:
 
 My final project for CELL 6351 - Intro to Reproducible Data Analysis Using R.
 
-[**View Final Report** →](projects/final-report.qmd)
+My husband, Tristan, loves fishing and often travels to California in search of trophy fish. After one trip, he confidently claimed that he had caught the biggest brown tout, but the exact location of his catch remains a closely guarded fishing secret.
+
+Inspired by his story, I found a publicly available dataset containing individual brown trout measurements, environmental variables, and sampling locations from across California.
+
+My research question is: What characteristics distinguish trophy-sized brown trout from the rest of the population, and with which group of California trout does Tristan's fish most closely align?
+
+I hypothesize that trophy-sized trout are associated with specific environmental conditions and will form distinct clusters based on body size and habitat characteristics.
+
+[**View Final Report** →](projects/final-report.qmd) #change the file name here to my project plus all the files i need for this to run
 
 ---
 

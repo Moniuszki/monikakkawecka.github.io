@@ -6,7 +6,7 @@ project:
 website:
   title: "My Research Profile"
   navbar:
-    search: false
+    search: true
     right:
       - icon: house-fill
         text: "Home"
@@ -17,10 +17,14 @@ website:
       - icon: github
         text: "GitHub"
         href: https://github.com
+      - icon: card_list
+        text: "Publications"
+        href: "fff.com"
+        # ican add as many links as i want here
 
 format:
   html:
-    theme: cosmo
+    theme: cosmo #i can change these for aesthetics
     toc: true
     css: styles.css
     code-overflow: wrap

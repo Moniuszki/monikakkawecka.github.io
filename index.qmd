@@ -1,18 +1,19 @@
 ---
-title: "Your Name"
+title: "Monika Klaudia Kawecka"
 toc: false
-image: "your photo.jpg"
+image: "photo.jpg"
 about:
   template: trestles
   links:
   - text: GitHub
-    href: link
+    href: https://github.com/Moniuszki/monikakkawecka.github.io
+  - text: LinkedIn
+    href:  https://www.linkedin.com/in/monika-kawecka/
   - text: email
-    href:  link
+    href:  monakawecka@gmail.com
 ---
 
-::: {.columnpage}
-
+::: columnpage
 # Hello! 👋
 
 Welcome to my research profile website. I'm a student in the Intro to Reproducible Data Analysis Using R course.
@@ -21,14 +22,14 @@ Welcome to my research profile website. I'm a student in the Intro to Reproducib
 
 Replace this section with information about yourself:
 
-- **Name:** Your Name Here
-- **Institution:** Your University
-- **Research Interests:** Add your research interests here
-- **Email:** your.email@university.edu
+- **Name:** Monika Klaudia Kawecka
+- **Institution:** Oklahoma Medical Research Foundation
+- **Research Interests:** meiosis
+- **Email:** monika-kawecka\@omrf.org
 
 ## My Research
 
-I'm interested in understanding [your topic area]. Through this course, I've learned how to:
+I'm interested in understanding \[your topic area\]. Through this course, I've learned how to:
 
 - Use R for data analysis
 - Create reproducible research workflows
@@ -46,6 +47,7 @@ As my research progresses, I'll continue adding:
 - New analyses and projects
 - Additional resources
 
----
+------------------------------------------------------------------------
 
 **Keep exploring!** Navigate using the menu above.
+:::
