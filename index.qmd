@@ -7,9 +7,9 @@ about:
   links:
   - icon: github
     href: https://github.com/Moniuszki/monikakkawecka.github.io
-  - text: LinkedIn
+  - icon: linkedin
     href: https://www.linkedin.com/in/monika-kawecka/
-  - text: email
+  - icon: mailbox
     href: mailto:monakawecka@gmail.com
 ---
 
@@ -20,14 +20,14 @@ I am Cell Biology Graduate Research Assistant that conducts research at Oklahoma
 
 ## About Me
 
-- **Name:** Monika Klaudia Kawecka
+- **Name:** Monika Klaudia Kawecka (Gilliland)
 - **Institution:** Oklahoma Medical Research Foundation
 - **Research Interests:** meiosis, chromatin remodelers
 - **Email:** monika-kawecka\@omrf.org
 
 ## My Research
 
-I'm interested in understanding \[your topic area\]. Through this course, I've learned how to:
+I'm interested in understanding changes in chromatin accesibility. Through this course, I've learned how to:
 
 - Use R for data analysis
 - Create reproducible research workflows
