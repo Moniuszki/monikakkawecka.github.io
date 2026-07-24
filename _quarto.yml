@@ -17,7 +17,7 @@ website:
       - icon: github
         text: "GitHub"
         href: https://github.com
-      - icon: card_list
+      - icon: card-list
         text: "Publications"
         href: "fff.com"
         # ican add as many links as i want here
