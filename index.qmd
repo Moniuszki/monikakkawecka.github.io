@@ -1,7 +1,7 @@
 ---
 title: "Monika Klaudia Kawecka"
 toc: false
-image: "photo.jpg"
+image: "Hawaii.jpg"
 about:
   template: trestles
   links:
