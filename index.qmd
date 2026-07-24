@@ -5,26 +5,28 @@ image: "Hawaii.jpg"
 about:
   template: trestles
   links:
-  - text: GitHub
+  - icon: github
     href: https://github.com/Moniuszki/monikakkawecka.github.io
   - text: LinkedIn
-    href:  https://www.linkedin.com/in/monika-kawecka/
+    href: https://www.linkedin.com/in/monika-kawecka/
   - text: email
-    href:  monakawecka@gmail.com
+    href: mailto:monakawecka@gmail.com
+    
+format:
+  html:
+   css: bio.css
 ---
 
 ::: columnpage
-# Hello! 👋
+# Biography
 
-Welcome to my research profile website. I'm a student in the Intro to Reproducible Data Analysis Using R course.
+I am Cell Biology Graduate Research Assistant that conducts research at Oklahoma Medical Research Foundation.
 
 ## About Me
 
-Replace this section with information about yourself:
-
 - **Name:** Monika Klaudia Kawecka
 - **Institution:** Oklahoma Medical Research Foundation
-- **Research Interests:** meiosis
+- **Research Interests:** meiosis, chromatin remodelers
 - **Email:** monika-kawecka\@omrf.org
 
 ## My Research
