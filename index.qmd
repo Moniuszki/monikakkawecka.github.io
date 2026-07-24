@@ -11,10 +11,6 @@ about:
     href: https://www.linkedin.com/in/monika-kawecka/
   - text: email
     href: mailto:monakawecka@gmail.com
-    
-format:
-  html:
-   css: bio.css
 ---
 
 ::: columnpage
