@@ -19,7 +19,7 @@ website:
         href: https://github.com
       - icon: card-list
         text: "Publications"
-        href: publications.qmd
+        href: Publications.qmd
         # ican add as many links as i want here
 
 format:
