@@ -4,7 +4,7 @@ project:
   output-dir: docs
 
 website:
-  title: "My Research Profile"
+  title: "Monika K. Kawecka"
   navbar:
     search: true
     right:
@@ -13,18 +13,16 @@ website:
         href: index.qmd
       - icon: briefcase-fill
         text: "Projects"
-        href: projects.qmd
-      - icon: github
-        text: "GitHub"
-        href: https://github.com
+        menu:
+        - text: "List of projects"
+          href: projects.qmd
       - icon: card-list
         text: "Publications"
         href: Publications.qmd
-        # ican add as many links as i want here
 
 format:
   html:
-    theme: cosmo #i can change these for aesthetics
+    theme: minty #i can change these for aesthetics
     toc: true
     css: styles.css
     code-overflow: wrap

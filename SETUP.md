@@ -56,6 +56,8 @@ Before you begin, make sure you have the following:
 * Write your final report.
 * Replace all placeholder text with your own content.
 
+#### Edit `projects/Lily.qmd`
+
 #### (Optional) Customizations
 
 `styles.css`

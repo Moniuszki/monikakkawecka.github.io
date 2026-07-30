@@ -1,0 +1,244 @@
+/* =========================================
+   BROWN TROUT REPORT THEME
+========================================= */
+
+
+/* ---------- Remove the forest background ---------- */
+
+html,
+body,
+#quarto-content,
+.page-columns,
+main,
+main.content {
+  background: #ffffff !important;
+}
+
+
+/* ---------- Make the whole report wider ---------- */
+
+.page-columns {
+  grid-template-columns:
+    [screen-start] 1.5rem
+    [screen-start-inset] 1.5rem
+    [page-start] 220px
+    [page-start-inset] 1.5rem
+    [body-start-outset] 1.5rem
+    [body-start] minmax(0, 1fr)
+    [body-end] 1.5rem
+    [body-end-outset] 1.5rem
+    [page-end-inset] 1.5rem
+    [page-end] 1.5rem
+    [screen-end-inset] 1.5rem
+    [screen-end] !important;
+
+  max-width: none !important;
+  width: 100% !important;
+}
+
+
+/* ---------- Main content ---------- */
+
+main.content {
+  max-width: none !important;
+  width: 100% !important;
+
+  border-left: 10px solid #285943;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+
+/* ---------- Remove the empty right margin ---------- */
+
+.margin-sidebar {
+  display: none !important;
+}
+
+.column-margin {
+  display: none !important;
+}
+
+
+/* ---------- Left TOC ---------- */
+
+#quarto-sidebar,
+.sidebar,
+.sidebar-navigation {
+  background: #ffffff !important;
+}
+
+#TOC {
+  background: #ffffff !important;
+  padding-right: 1rem;
+}
+
+#TOC .toc-title {
+  color: #5b3028 !important;
+  font-weight: 700;
+}
+
+#TOC a,
+#TOC a:visited {
+  color: #476b59 !important;
+}
+
+#TOC a:hover {
+  color: #8a5436 !important;
+}
+
+#TOC .active {
+  color: #3f8f77 !important;
+  font-weight: 700;
+}
+
+nav[role="doc-toc"] {
+  border-left: 2px solid #9aae8f !important;
+}
+
+
+/* ---------- Text ---------- */
+
+body {
+  color: #30352f;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.7;
+}
+
+p {
+  text-align: justify;
+  margin-bottom: 1.2rem;
+}
+
+
+/* ---------- Brown trout headings ---------- */
+
+.title,
+h1 {
+  color: #652525 !important;
+  font-weight: 750;
+}
+
+h2 {
+  color: #7f302c !important;
+  font-weight: 700;
+}
+
+h3 {
+  color: #99613e !important;
+  font-weight: 700;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 1.4em;
+  margin-bottom: 0.6em;
+}
+
+.header-section-number {
+  color: #90938a !important;
+}
+
+
+/* ---------- Links ---------- */
+
+main a,
+main a:visited {
+  color: #47705c !important;
+}
+
+main a:hover {
+  color: #8b5636 !important;
+}
+
+
+/* ---------- Code ---------- */
+
+code {
+  background: #f2eee6 !important;
+  color: #63382d !important;
+  border-radius: 4px;
+  padding: 0.15em 0.35em;
+}
+
+pre,
+.sourceCode {
+  background: #f8f6f1 !important;
+  border-left: 5px solid #6d8f74 !important;
+  border-radius: 7px;
+}
+
+.code-fold-btn,
+.code-tools-button,
+details summary {
+  color: #4f705d !important;
+}
+
+
+/* ---------- Tables ---------- */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+}
+
+table th {
+  background: #536f5c;
+  color: #ffffff;
+}
+
+table th,
+table td {
+  padding: 0.75em;
+  border: 1px solid #d7d7d0;
+}
+
+table tr:nth-child(even) {
+  background: #f6f5f1;
+}
+
+table tr:hover {
+  background: #edf1eb;
+}
+
+
+/* ---------- Figures ---------- */
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+figcaption,
+.figure-caption {
+  color: #66645f;
+  font-style: italic;
+}
+
+
+/* ---------- Quotes ---------- */
+
+blockquote {
+  background: #f7f3eb;
+  border-left: 5px solid #8b5d3d;
+  padding: 1em 1.4em;
+  border-radius: 6px;
+  color: #48413a;
+}
+
+
+/* ---------- Navbar remains part of the website ---------- */
+
+.navbar {
+  background: #0d4435 !important;
+}
+
+.navbar,
+.navbar a,
+.navbar-brand,
+.navbar-title,
+.navbar-nav .nav-link {
+  color: #ffffff !important;
+}

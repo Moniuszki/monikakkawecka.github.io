@@ -16,9 +16,7 @@ about:
 ::: columnpage
 # Biography
 
-I am Cell Biology Graduate Research Assistant that conducts research at Oklahoma Medical Research Foundation.
-
-## About Me
+I am **Cell Biology** Graduate Research Assistant that conducts research at Oklahoma Medical Research Foundation.
 
 - **Name:** Monika Klaudia Kawecka (Gilliland)
 - **Institution:** Oklahoma Medical Research Foundation
@@ -34,18 +32,9 @@ I'm interested in understanding changes in chromatin accesibility. Through this 
 - Build websites to share my work
 - Manage my research projects with Git and GitHub
 
-## This Website
 
-This site showcases my research and projects. Check out my **Projects** page to see my final report and other work!
-
-As my research progresses, I'll continue adding:
-
-- Publications
-- Conference posters
-- New analyses and projects
-- Additional resources
 
 ------------------------------------------------------------------------
 
-**Keep exploring!** Navigate using the menu above.
+If you have any further questions, please don't feel free to contact me.
 :::

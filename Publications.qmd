@@ -1,8 +1,11 @@
 ---
 title: "Publications"
 author: "MKK"
+format:
+  html:
+    toc: false
 ---
 
-1.  Marchut-Mikołajczyk, O., Chlebicz, M., Kawecka, M. *et al.* Endophytic bacteria isolated from *Urtica* *dioica* L.- preliminary screening for enzyme and polyphenols production. *Microb Cell Fact* **22**, 169 (2023). [DOI](https://doi.org/10.1186/s12934-023-02167-2)
+1.  Paradowska, E., Haręża, D.A., Kania, K.D. *et al.* Human papillomavirus infection of the fallopian tube as a potential risk factor for epithelial ovarian cancer. *Sci Rep* **14**, 21602 (2024). [DOI](https://doi.org/10.1038/s41598-024-72814-0)
 
-2.  Paradowska, E., Haręża, D.A., Kania, K.D. *et al.* Human papillomavirus infection of the fallopian tube as a potential risk factor for epithelial ovarian cancer. *Sci Rep* **14**, 21602 (2024). [DOI](https://doi.org/10.1038/s41598-024-72814-0)
+2.  Marchut-Mikołajczyk, O., Chlebicz, M., Kawecka, M. *et al.* Endophytic bacteria isolated from *Urtica* *dioica* L.- preliminary screening for enzyme and polyphenols production. *Microb Cell Fact* **22**, 169 (2023). [DOI](https://doi.org/10.1186/s12934-023-02167-2)

@@ -1,0 +1,17 @@
+{
+  "hash": "e0657328ba64595ffda00dd3b6e4d7ba",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Can Data Reveal My Husband's Secret Fishing Spot?\"\ndate: \"2026-07-25\"\nauthor: \"Monika Klaudia Kawecka-Gilliland\"\n\nformat:\n  html:\n    toc: true\n    toc-depth: 3\n    toc-location: left\n    number-sections: true\n    css: headercolor.css\n\neditor: visual\n\nexecute:\n  warning: false\n  message: false\n\ncode-fold: true\necho: false\nerror: false\neditor_options: \n  chunk_output_type: console\n---\n\n# Introduction\n\nMy husband, Tristan, loves fishing and often travels to California in search of trophy fish. After one trip, he confidently claimed that he had caught the biggest brown tout, but the exact location of his catch remains a closely guarded fishing secret.\n\nInspired by his story, I found a publicly available dataset containing individual brown trout measurements, environmental variables, and sampling locations from across California.\n\nMy research question is: What characteristics distinguish trophy-sized brown trout from the rest of the population, and with which group of California trout does Tristan's fish most closely align?\n\nI hypothesize that trophy-sized trout are associated with specific environmental conditions and will form distinct clusters based on body size and habitat characteristics.\n\nTo investigate this, I will use exploratory data analysis, summary statistics, data visualization, principal component analysis, and clustering methods. Finally, I will compare Tristan's brown trout with the identified clusters to determine which group it most closely resembles. Additionally, I will use the characteristics of that cluster to find out the type of habitat—and potentially the region of California—where his trophy brown trout was most likely caught.\n\n# Loading libraries\n\n\n::: {.cell Label='Loading libraries'}\n\n:::\n\n\n# Dataset\n\n## Importing dataset\n\n[Inland Fisheries](http://data.cnra.ca.gov/dataset/inland-fisheries-length-weight-ds195?utm_source=chatgpt.com \"Inland Fisheries\"){.uri} is a subset of the Tuolumne Aquatic Resources Relational Inventory (TARRI) compiled by Brian Quelvog, California Department of Fish and Game.\n\n\n::: {.cell}\n\n:::\n\n\n## Methods\n\nDescribe how you conducted your analysis. What data did you use? What analyses did you perform?\n\n## Results\n\nShare your findings here. You can include:\n\n- Text explanations\n- Tables\n- Figures and visualizations\n- Code examples (if relevant)\n\n### Example Code Block\n\nHere's a sample R code block:\n\n\n::: {.cell}\n::: {.cell-output-display}\n![](final-report_files/figure-html/unnamed-chunk-3-1.png){width=672}\n:::\n:::\n\n\n### Example Table\n\n| Method     | Result          | P-value |\n|------------|-----------------|---------|\n| Analysis 1 | Significant     | 0.01    |\n| Analysis 2 | Not Significant | 0.15    |\n\n## Discussion\n\nWhat do your results mean? How do they relate to your research question? What limitations exist? What would you do next?\n\n## Conclusions\n\nSummarize your findings and their implications.\n\n## References\n\nAdd any references to papers, data sources, or resources you used.\n\n------------------------------------------------------------------------\n\n**Last updated:** June 2026\n",
+    "supporting": [
+      "final-report_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
