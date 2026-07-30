@@ -22,7 +22,7 @@ website:
 
 format:
   html:
-    theme: minty #i can change these for aesthetics
+    #theme: minty #i can change these for aesthetics
     toc: true
     css: styles.css
     code-overflow: wrap
