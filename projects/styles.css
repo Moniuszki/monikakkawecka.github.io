@@ -1,0 +1,283 @@
+/* ============================================
+   My Research Profile
+   Emerald Forest Theme
+============================================ */
+
+/* ---------- Page ---------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.7;
+  background-color: #F6FAF4;
+  color: #2F3B2F;
+}
+
+p {
+  text-align: justify;
+}
+
+/* ---------- Profile picture ---------- */
+
+img.about-image {
+  width: 20em;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50% !important;
+  border: 6px solid white;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+
+/* ============================================
+   Navigation Bar
+============================================ */
+
+.navbar {
+  background: #0F3D2E !important;
+  border-bottom: 3px solid #6B8E23;
+}
+
+.navbar-brand {
+  color: white !important;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.navbar-nav .nav-link {
+  color: white !important;
+  transition: 0.25s;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #D9C27A !important;
+}
+
+.navbar-nav .nav-link.active {
+  color: #D9C27A !important;
+  font-weight: bold;
+}
+
+/* Make navbar icons follow text color */
+
+.navbar i,
+.navbar svg {
+  color: inherit !important;
+  fill: currentColor !important;
+}
+
+/* ============================================
+   Dropdown Menu
+============================================ */
+
+.dropdown-menu {
+  background-color: #184C3A !important;
+  border: none !important;
+  border-radius: 8px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+}
+
+/* Force dropdown text to white */
+
+.navbar .dropdown-menu .dropdown-item,
+.navbar .dropdown-menu .dropdown-item:visited {
+  color: #ffffff !important;
+}
+
+/* Hover */
+
+.navbar .dropdown-menu .dropdown-item:hover,
+.navbar .dropdown-menu .dropdown-item:focus {
+  background-color: #24533F !important;
+  color: #D9C27A !important;
+}
+
+/* Active page */
+
+.navbar .dropdown-menu .dropdown-item.active,
+.navbar .dropdown-menu .dropdown-item:active {
+  background-color: #2E5A44 !important;
+  color: #ffffff !important;
+}
+
+/* ============================================
+   Right Table of Contents
+============================================ */
+
+.sidebar.toc-right,
+.sidebar.margin-sidebar {
+  background-color: #184C3A !important;
+}
+
+/* Title */
+
+.sidebar.toc-right .toc-title,
+.sidebar.margin-sidebar .toc-title,
+.sidebar h2 {
+  color: white !important;
+}
+
+/* Links */
+
+.sidebar.toc-right a,
+.sidebar.margin-sidebar a {
+  color: white !important;
+}
+
+.sidebar.toc-right a:hover,
+.sidebar.margin-sidebar a:hover {
+  color: #D9C27A !important;
+}
+
+/* Active section */
+
+.sidebar.toc-right .active,
+.sidebar.margin-sidebar .active {
+  color: #D9C27A !important;
+  font-weight: bold;
+}
+
+/* Vertical TOC line */
+
+.sidebar nav[role="doc-toc"] {
+  border-left: 2px solid rgba(255,255,255,0.35) !important;
+}
+
+/* ============================================
+   Headings
+============================================ */
+
+h1 {
+  color: #184C3A;
+}
+
+h2 {
+  color: #2E5A44;
+}
+
+h3 {
+  color: #4F7A61;
+}
+
+/* ============================================
+   Links
+============================================ */
+
+a,
+a:visited {
+  color: #2E5A44;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #A67C39;
+  text-decoration: underline;
+}
+
+/* ============================================
+   Code
+============================================ */
+
+code {
+  background: #EEF5EC;
+  color: #184C3A;
+  padding: 0.2em 0.4em;
+  border-radius: 5px;
+}
+
+pre {
+  background: #F4F8F2;
+  border-left: 5px solid #6B8E23;
+  border-radius: 10px;
+  padding: 1em;
+  overflow-x: auto;
+}
+
+/* ============================================
+   Tables
+============================================ */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+}
+
+table th,
+table td {
+  border: 1px solid #D9E4D6;
+  padding: 0.8em;
+}
+
+table th {
+  background: #2E5A44;
+  color: white;
+}
+
+table tr:nth-child(even) {
+  background: #F1F6EF;
+}
+
+table tr:hover {
+  background: #E7F1E4;
+}
+
+/* ============================================
+   Quotes
+============================================ */
+
+blockquote {
+  background: #F2F7F0;
+  border-left: 5px solid #6B8E23;
+  color: #4E5D4C;
+  padding: 1em 1.5em;
+  border-radius: 8px;
+  font-style: italic;
+}
+
+/* ============================================
+   Images
+============================================ */
+
+img {
+  border-radius: 10px;
+}
+
+/* ============================================
+   Horizontal Rule
+============================================ */
+
+hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    #184C3A,
+    #6B8E23,
+    #184C3A
+  );
+}
+
+/* ============================================
+   Buttons
+============================================ */
+
+.btn-primary {
+  background: #2E5A44 !important;
+  border-color: #2E5A44 !important;
+}
+
+.btn-primary:hover {
+  background: #184C3A !important;
+}
+
+/* ============================================
+   Text selection
+============================================ */
+
+::selection {
+  background: #DCEAD8;
+  color: #184C3A;
+}
