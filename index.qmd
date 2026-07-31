@@ -11,6 +11,9 @@ about:
     href: https://www.linkedin.com/in/monika-kawecka/
   - icon: mailbox
     href: mailto:monakawecka@gmail.com
+    
+ <link rel="icon" type="image/x-icon" href="~/Documents/GitHub/monikakkawecka.github.io/Lily.jpg">
+
 ---
 
 ::: columnpage
