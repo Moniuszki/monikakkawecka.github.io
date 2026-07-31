@@ -33,6 +33,7 @@ execute:
 
 editor_options:
   chunk_output_type: console
+  
 ---
 
 ```{=html}
@@ -390,6 +391,7 @@ library(tidymodels) # for dimension reduction
 library(embed) #extra preprocessing steps for the recipes package to convert high-cardinality categorical variables and complex predictors into numeric embeddings using outcome data
 library(ggrepel) # to repel PCA labels
 library(patchwork) #combine multiple ggplot2 graphs into one
+library(dbscan)
 ```
 
 # Introduction
@@ -669,16 +671,16 @@ ctrout <- brown_trout |>
 nrow(ctrout)
 ```
 
-# Let's explore - change data to ctrout?!
+# Let's explore 
 
 ## Creating correlation matrix
 
 ```{r}
 # Trying to make the figure visible
-#| fig-width: 20
-#| fig-height: 20
+#| fig-width: 30
+#| fig-height: 30
 
-correlations <- brown_trout |>
+correlations <- ctrout |>
   dplyr::select(Length_mm,
     Weight_g,
     Temperature_C,
@@ -691,27 +693,39 @@ correlations <- brown_trout |>
 GGally::ggpairs(
   correlations,
   upper = list(
-    continuous = GGally::wrap("cor", size = 7)
+    continuous = GGally::wrap("cor", size = 4)
   )
 ) +
   theme(
     text = element_text(size = 16),
     strip.text = element_text(size = 14),
-    axis.text = element_text(size = 10)
+    axis.text = element_text(size = 7)
   )
 ```
 
 **Strong correlations to look at:**
 
-- **Length vs Weight r = 0.774**
-- **pH vs Conductivity r = 0.537**
-- **Flow vs Elevation r = -0.797**
-- **Temperature vs Elevation r = -0.728**
+- **Length vs Weight r = 0.902**
+- **Temperature vs pH r = 0.994**
+- **Elevation vs Hardness r = 0.764**
+- **Conductivity vs Flow r = -0.881**
+
+**Fish size vs enviroment**
+
+- **Temperature r = 0.564**
+
+- **pH = 0.557**
+
+**Fish weight**
+
+- **Temperature r = 0.600**
+
+- **pH = 0.584**
 
 ```{r}
 #| include: false
 #| ### Let's see data distribution.
-brown_trout |>
+ctrout |>
   count(County, name = "Number_of_fish") |>
   arrange(County) |>
   gt() |>
@@ -742,7 +756,7 @@ county_alpha <- c(
   "Alpine, CA"   = 1
 )
 
-brown_trout <- brown_trout |>
+ctrout <- ctrout |>
   mutate(
     County = factor(
       County,
@@ -754,9 +768,9 @@ brown_trout <- brown_trout |>
 
 ```{r}
 #| include: false
-### **Length vs Weight r = 0.774**
 
-p1 <- brown_trout |>
+p1 <- ctrout |>
+  filter(Length_mm != 1666) |>
   ggplot(
     aes(
       x = Length_mm,
@@ -779,60 +793,18 @@ p1 <- brown_trout |>
     values = county_alpha
   ) +
   theme_cowplot()
+p1
 
 ```
 
 ```{r}
 #| include: false
-brown_trout_no_outlier <- brown_trout |>
-  filter(Length_mm != 1666)
 
-p1_no_outlier <- ggplot(
-  brown_trout_no_outlier,
-  aes(
-    x = Length_mm,
-    y = Weight_g,
-    color = County
-  )
-) +
-  geom_point(
-    aes(alpha = County),
-    size = 3,
-    na.rm = TRUE,
-    show.legend = FALSE
-  ) +
-  scale_color_manual(
-    values = county_colors,
-    limits = names(county_colors),
-    breaks = names(county_colors),
-    name = "County"
-  ) +
-  scale_alpha_manual(
-    values = county_alpha
-  ) +
-  theme_cowplot()
-```
-
-```{r}
-#| include: false
-#Let's compare plots with and without the longest fish.
-
-wrap_plots(
-  p1,
-  p1_no_outlier,
-  ncol = 2
-)
-```
-
-```{r}
-#| include: false
-### **pH vs Conductivity r = 0.537**
-
-pH_conductivity_plot <- brown_trout |>
+p2 <- pH_temp_plot <- ctrout |>
   ggplot(
     aes(
       x = pH,
-      y = Conductivity,
+      y = Temperature_C,
       color = County
     )
   ) +
@@ -854,81 +826,16 @@ pH_conductivity_plot <- brown_trout |>
     guide = "none"
   ) +
   theme_cowplot()
-pH_conductivity_plot
+p2
 ```
 
 ```{r}
 #| include: false
-# Why I see only a few points?
-brown_trout |>
-    filter(!is.na(pH), !is.na(Conductivity)) |>
-    nrow()
-```
 
-```{r}
-#| include: false
-#I have much more fish than points! Do I have some missing data?
-brown_trout |>
-  summarize(
-    pH_NA = sum(is.na(pH)),
-    Conductivity_NA = sum(is.na(Conductivity)),
-    both_NA = sum(is.na(pH) & is.na(Conductivity)),
-    pH_present_Cond_NA = sum(!is.na(pH) & is.na(Conductivity)),
-    Cond_present_pH_NA = sum(is.na(pH) & !is.na(Conductivity)),
-    pH_Conductivity_present = sum(!is.na(pH)) & sum(!is.na(Conductivity) )
-  )
-```
-
-```{r}
-#| include: false
-library(ggbeeswarm)
-
-p2 <- brown_trout |>
-  filter(!is.na(pH), !is.na(Conductivity)) |>
+p3 <- ctrout |>
   ggplot(
     aes(
-      x = factor(pH),
-      y = Conductivity,
-      color = County
-    )
-  ) +
-  geom_quasirandom(
-    aes(alpha = County),
-    size = 3,
-    show.legend = FALSE
-  ) +
-  scale_color_manual(
-    values = county_colors,
-    limits = names(county_colors),
-    name = "County"
-  ) +
-  scale_alpha_manual(
-    values = county_alpha
-  ) +
-  theme_cowplot()
-```
-
-```{r}
-#| include: false
-library(patchwork)
-
-wrap_plots(
-  pH_conductivity_plot +
-    ggtitle("With NA"),
-  p2 +
-    ggtitle("Without NA"),
-  ncol = 2
-)
-```
-
-```{r}
-#| include: false
-### **Flow vs Elevation r = -0.797**
-
-p3 <- brown_trout |>
-  ggplot(
-    aes(
-      x = Flow,
+      x = Hardness,
       y = Elevation_ft,
       color = County,
       alpha = County
@@ -950,17 +857,47 @@ p3 <- brown_trout |>
   ) +
   theme_cowplot()
 
-# Indeed, the higher elevation, the smaller the water flow.Tuolumne has a big range of height. Alpine seems to be a spot that is higher place in total while the rest is spread along diffrenet heights.
+p3
 ```
 
 ```{r}
 #| include: false
-### **Temperature vs Elevation r = -0.728**
-p4 <- brown_trout |>
+
+p4 <- ctrout |>
+  ggplot(
+    aes(
+      x = Conductivity,
+      y = Flow,
+      color = County,
+      alpha = County
+    )
+  ) +
+  geom_point(
+    size = 3,
+    na.rm = TRUE
+  ) +
+  scale_color_manual(
+    values = county_colors,
+    limits = names(county_colors),
+    name = "County"
+  ) +
+  scale_alpha_manual(
+    values = county_alpha,
+    limits = names(county_alpha),
+    guide = "none"
+  ) +
+  theme_cowplot()
+p4
+```
+
+```{r}
+#| include: false
+
+p5 <- ctrout |>
   ggplot(
     aes(
       x = Temperature_C,
-      y = Elevation_ft,
+      y = Length_mm,
       color = County,
       alpha = County
     )
@@ -980,17 +917,105 @@ p4 <- brown_trout |>
     guide = "none"
   ) +
   theme_cowplot()
+p5
+```
 
+```{r}
+#| include: false
+
+p6 <- ctrout |>
+  ggplot(
+    aes(
+      x = pH,
+      y = Length_mm,
+      color = County,
+      alpha = County
+    )
+  ) +
+  geom_point(
+    size = 3,
+    na.rm = TRUE
+  ) +
+  scale_color_manual(
+    values = county_colors,
+    limits = names(county_colors),
+    name = "County"
+  ) +
+  scale_alpha_manual(
+    values = county_alpha,
+    limits = names(county_alpha),
+    guide = "none"
+  ) +
+  theme_cowplot()
+p6
+```
+
+```{r}
+#| include: false
+
+p7 <- ctrout |>
+  ggplot(
+    aes(
+      x = Temperature_C,
+      y = Weight_g,
+      color = County,
+      alpha = County
+    )
+  ) +
+  geom_point(
+    size = 3,
+    na.rm = TRUE
+  ) +
+  scale_color_manual(
+    values = county_colors,
+    limits = names(county_colors),
+    name = "County"
+  ) +
+  scale_alpha_manual(
+    values = county_alpha,
+    limits = names(county_alpha),
+    guide = "none"
+  ) +
+  theme_cowplot()
+p7
+```
+
+```{r}
+#| include: false
+
+p8 <- ctrout |>
+  ggplot(
+    aes(
+      x = pH,
+      y = Weight_g,
+      color = County,
+      alpha = County
+    )
+  ) +
+  geom_point(
+    size = 3,
+    na.rm = TRUE
+  ) +
+  scale_color_manual(
+    values = county_colors,
+    limits = names(county_colors),
+    name = "County"
+  ) +
+  scale_alpha_manual(
+    values = county_alpha,
+    limits = names(county_alpha),
+    guide = "none"
+  ) +
+  theme_cowplot()
+p8
 ```
 
 ### Let's plot them all the variables together
 
 ```{r}
-library(patchwork)
-
-combined_plot <- (p1 + p2 + p3 + p4) +
+combined_plot <- (p1 + p2 + p3 + p4 + p5 + p6 + p7 + p8) +
   plot_layout(
-    ncol = 2,
+    ncol = 4,
     guides = "collect"
   ) &
   theme(
@@ -1097,7 +1122,7 @@ Ranges |>
 ```{r}
 ggplot() +
   geom_point(
-    data = brown_trout,
+    data = ctrout,
     aes(x = Length_mm, y = Weight_g),
     color = "skyblue",
     alpha = 0.6,
@@ -1114,7 +1139,8 @@ annotate(
   x = Tristan$Length_mm + 400,
   y = Tristan$Weight_g + 20,
   label = "Tristan's fish",
-  color = "brown"
+  color = "brown",
+  hjust = 2
 ) +
   
   labs(
@@ -1126,7 +1152,7 @@ annotate(
 
 ```{r}
 #| include: false
-ggplot(brown_trout, aes(x = Weight_g)) +
+ggplot(ctrout, aes(x = Weight_g)) +
   geom_histogram(
     binwidth = 100,
     fill = "steelblue",
@@ -1156,28 +1182,12 @@ ggplot(brown_trout, aes(x = Weight_g)) +
 
 ```{r}
 #| include: false
-library(ggbreak)
-
-ggplot(brown_trout, aes(x = Length_mm)) +
+ggplot(ctrout, aes(x = Length_mm)) +
   geom_histogram(
     binwidth = 25,
     fill = "steelblue",
     color = "white"
   ) +
-  stat_bin(
-    binwidth = 25,
-    geom = "text",
-    aes(
-      label = ifelse(
-        after_stat(count) > 0,
-        after_stat(count),
-        ""
-      )
-    ),
-    vjust = -0.3,
-    size = 3
-  ) +
-  scale_x_break(c(660, 1660)) +
   geom_vline(
     xintercept = Tristan$Length_mm,
     color = "brown",
@@ -1185,16 +1195,16 @@ ggplot(brown_trout, aes(x = Length_mm)) +
   ) +
   annotate(
     "text",
-    x = Tristan$Length_mm,
+    x = Tristan$Length_mm+100,
     y = Inf,
-    label = "Tristan",
+    label = "Tristan's fish",
     color = "brown",
-    hjust = 1.2,
-    vjust = 1.5
+    hjust = 2,
+    vjust = 2
   ) +
   labs(
-    title = "Brown Trout Length Distribution",
-    x = "Length (mm)",
+    title = "Brown Trout Weight Distribution",
+    x = "Weight (g)",
     y = "Number of fish"
   ) +
   theme_cowplot()
@@ -1214,7 +1224,7 @@ Well, this dataset is 23 years old!
 
 But this is Tristan's Brown Trout in comparison to other Brown Touts caugth on `r Tristan$Date`
 
-![The fish caught during the trip](images/04774560-ADA9-426B-8B21-D5CA52395994.jpeg)
+![The fish caught during the trip (the biggest).](images/04774560-ADA9-426B-8B21-D5CA52395994.jpeg)
 
 ## Can I see what is the best month to fish? Do we have data for that?
 
@@ -1299,7 +1309,7 @@ brown_trout |>
   )
 ```
 
-Besides our obvious winner, August and September it the best time to catch a heavy fish!
+Besides our obvious winner, August and September is the best time to catch a heavy fish!
 
 ### Let's add some statistics.
 
@@ -1516,7 +1526,7 @@ brown_trout |>
     outlier.color = "red"
   ) +
   labs(
-    title = "Brown Trout Lenggth by Month",
+    title = "Brown Trout Length by Month",
     subtitle = "Which month had the longest fish?",
     x = "Month",
     y = "Length (mm)"
@@ -1550,57 +1560,6 @@ brown_trout |>
   )
 ```
 
-```{r}
-#| include: false
-#| ## Is Tristan's fish much bigger than what is caught in May?
-brown_trout |>
-  mutate(
-    date = Date,
-    month = month(date)
-  ) |>
-  filter(month == 5) |>
-  ggplot(
-    aes(
-      x = Length_mm,
-      y = Weight_g
-    )
-  ) +
-  geom_point(
-    color = "steelblue",
-    alpha = 0.5,
-    size = 3
-  ) +
-  geom_point(
-    data = Tristan,
-    aes(
-      x = Length_mm,
-      y = Weight_g
-    ),
-    color = "lightsalmon4",
-    size = 5,
-    shape = 18
-  ) +
-  geom_text(
-    data = Tristan,
-    aes(
-      x = Length_mm,
-      y = Weight_g,
-      label = "Tristan",
-      hjust = 1.5,
-      vjust = 1.5
-    ),
-    color = "lightsalmon4",
-    nudge_x = 15,
-    nudge_y = 50
-  ) +
-  labs(
-    title = "Weight and Length of Brown Trout Caught in May",
-    x = "Length (mm)",
-    y = "Weight (g)"
-  ) +
-  theme_cowplot()
-```
-
 ### Within which water temperature range do brown trout exhibit the highest weight?
 
 Water temperature explains only about 36% of the differences in fish weight. So temperature is related to weight, but the relationship is weak. p \< 0.001. The relationship is statistically significant. This means the pattern is unlikely to be due to random chance in this dataset.
@@ -1608,9 +1567,6 @@ Water temperature explains only about 36% of the differences in fish weight. So 
 ```{r}
 #| message: false
 #| warning: false
-
-library(tidyverse)
-library(cowplot)
 
 # Prepare data
 weight_temperature <- ctrout |>
@@ -1755,7 +1711,7 @@ ctrout_recipe <-
 ## we want to use all the data to build the analysis so we us ~  and . to include all data numeric variables #   #~. means use all the data, |> pipe of what we will do #   
 recipe( ~ ., data = ctrout) |> 
 # we want to maintain the categorical data so we give it a new role of id to identify the data 
-update_role(Site, County, Map_Quadrangle, Date, Latitude, Longitude, Location, new_role = "id") |> 
+update_role(Site, County, Map_Quadrangle, Date, Latitude, Longitude, Location, Record_ID, new_role = "id") |> 
 # we want to omit rows with missing data because it can't be properly used by the PCA #   
   step_naomit(all_predictors()) |>  
 # to make sure all the data is normally distributed and centered we want to normalize the data before running PCA    
@@ -1860,7 +1816,7 @@ pca_wider <- ctrout_prep |>
 
               pivot_wider(names_from = component, id_cols = terms)
 
-arrow_style <- arrow(length = unit(.05, "inches"), type = "closed")
+arrow_style <- arrow(length = unit(.1, "inches"), type = "closed")
 
 pca_plot +
 
@@ -1885,14 +1841,14 @@ geom_text_repel(
   color = "black",
   max.overlaps = Inf,
   box.padding = 0.5,
-  point.padding = 0.2,
+  point.padding = 0.1,
   segment.color = "grey50"
 )
 
 ```
 
 ```{r}
-#| include: false
+
 # Out of curiosity, I will compare PC1 and PC3.
 pca_plot <- ctrout_bake |> 
   ggplot(aes(PC1, PC3)) +
@@ -1922,6 +1878,8 @@ pca_plot +
 
 ## Prep the Data and Perform the UMAP instead
 
+## Prep the Data and Perform the UMAP instead
+
 ```{r}
 set.seed(2527)
 
@@ -1929,15 +1887,7 @@ glimpse(ctrout)
 
 ctrout_recipe <-
   recipe(County~ ., data = ctrout) |> 
-  update_role(Site, County, Map_Quadrangle, Date, Latitude, Longitude, Location,  new_role = "id") |> 
-  step_rm(
-  Longitude,
-  Latitude,
-  Date,
-  Site,
-  Map_Quadrangle,
-  Location
-) |>
+  update_role(Site, County, Map_Quadrangle, Date, Latitude, Longitude, Location,  new_role = "id") |>
   step_naomit(all_predictors()) |> 
   step_normalize(all_predictors()) |>
   step_umap(all_numeric_predictors(), num_comp = 5, neighbors = 15,
@@ -1964,6 +1914,8 @@ ctrout_bake
 ## 3 UMAPs combined
 
 ```{r}
+#| fig-width: 20
+#| fig-height: 20
 umap_long <- bind_rows(
   ctrout_bake |>
     transmute(
@@ -1989,7 +1941,7 @@ umap_long <- bind_rows(
 )
 
 ggplot(umap_long, aes(x = x, y = y, color = County)) +
-  geom_point(alpha = 0.5, size = 2) +
+  geom_point(alpha = 0.5, size = 10) +
   facet_wrap(~Comparison, scales = "free") +
   theme_cowplot()
 
@@ -2276,7 +2228,14 @@ p17<-umap_with_variables |>
 
 The lower-right cluster stands out the most.
 
-Highest Flow (brightest in the Flow plot) Highest Temperature Highest Length Highest Weight Lowest Elevation Lowest pH Lowest Hardness Lowest Conductivity
+Highest Flow (brightest in the Flow plot) 
+Highest Temperature 
+Highest Length 
+Highest Weight 
+Lowest Elevation 
+Lowest pH 
+Lowest Hardness 
+Lowest Conductivity
 
 This suggests these fish were caught in a distinct habitat characterized by warm, low-elevation water with lower conductivity and hardness, and they tend to be the largest fish.
 
@@ -2365,9 +2324,6 @@ cluster_summary |>
 ```{r}
 # Compare Tristan's fish to the average fish in UMAP Cluster 1
 
-library(tibble)
-library(gt)
-
 # Create a small table containing the three variables
 # that Tristan's fish and Cluster 1 have in common
 cluster1_vs_tristan <- tibble(
@@ -2378,10 +2334,10 @@ cluster1_vs_tristan <- tibble(
   ),
 
   # Extract the mean values for Cluster 1
-  `Cluster 1 Mean` = c(
-    cluster_summary$Mean_Temperature[cluster_summary$Cluster == 1],
-    cluster_summary$Mean_Length[cluster_summary$Cluster == 1],
-    cluster_summary$Mean_Weight[cluster_summary$Cluster == 1]
+  `Cluster 6 Mean` = c(
+    cluster_summary$Mean_Temperature[cluster_summary$Cluster == 6],
+    cluster_summary$Mean_Length[cluster_summary$Cluster == 6],
+    cluster_summary$Mean_Weight[cluster_summary$Cluster == 6]
   ),
 
   # Add Tristan's measurements
@@ -2396,11 +2352,11 @@ cluster1_vs_tristan <- tibble(
 cluster1_vs_tristan |>
   gt() |>
   fmt_number(
-    columns = c(`Cluster 1 Mean`, Tristan),
+    columns = c(`Cluster 6 Mean`, Tristan),
     decimals = 1
   ) |>
   tab_header(
-    title = "Comparison of Tristan's Fish with UMAP Cluster 1",
+    title = "Comparison of Tristan's Fish with UMAP Cluster 6",
     subtitle = "Cluster mean compared with Tristan's measurements"
   )
 ```
@@ -2413,17 +2369,18 @@ ctrout_clustered |>
 
 ```{r}
 ctrout_clustered |>
-  filter(Cluster == 1) |>
+  filter(Cluster == 6) |>
   count(County, Site, sort = TRUE) |>
   rename(`Number of Fish` = n) |>
   gt() |>
   tab_header(
-    title = "Sites and Counties Represented in UMAP Cluster 1",
+    title = "Sites and Counties Represented in UMAP Cluster 6",
     subtitle = "Number of fish sampled at each site"
   )
 ```
 
-Based on my limited data, Tristan's fishing site is the most comparable to Cluster 1.
+
+I have no idea where he caught the fish.
 
 # Limitations
 
