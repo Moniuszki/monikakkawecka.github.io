@@ -5,6 +5,7 @@ project:
 
 website:
   title: "Monika K. Kawecka"
+  favicon: Lily.jpg
   navbar:
     search: true
     right:
