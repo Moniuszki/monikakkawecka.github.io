@@ -33,7 +33,6 @@ execute:
 
 editor_options:
   chunk_output_type: console
-  
 ---
 
 ```{=html}
@@ -671,7 +670,7 @@ ctrout <- brown_trout |>
 nrow(ctrout)
 ```
 
-# Let's explore 
+# Let's explore
 
 ## Creating correlation matrix
 
@@ -1915,7 +1914,7 @@ ctrout_bake
 
 ```{r}
 #| fig-width: 20
-#| fig-height: 20
+#| fig-height: 15
 umap_long <- bind_rows(
   ctrout_bake |>
     transmute(
@@ -1940,7 +1939,7 @@ umap_long <- bind_rows(
     )
 )
 
-ggplot(umap_long, aes(x = x, y = y, color = County)) +
+ggplot(umap_long, aes(x = UMAP, y = UMAP, color = County)) +
   geom_point(alpha = 0.5, size = 10) +
   facet_wrap(~Comparison, scales = "free") +
   theme_cowplot()
@@ -2226,16 +2225,23 @@ p17<-umap_with_variables |>
   theme_cowplot()
 ```
 
-The lower-right cluster stands out the most.
+The lower-LEFT cluster stands out the most.
 
-Highest Flow (brightest in the Flow plot) 
-Highest Temperature 
-Highest Length 
-Highest Weight 
-Lowest Elevation 
-Lowest pH 
-Lowest Hardness 
-Lowest Conductivity
+- Highest Flow (brightest in the Flow plot)
+
+- Highest Temperature
+
+- Highest Length
+
+- Highest Weight
+
+- Lowest Elevation
+
+- Lowest pH
+
+- Lowest Hardness
+
+- Lowest Conductivity
 
 This suggests these fish were caught in a distinct habitat characterized by warm, low-elevation water with lower conductivity and hardness, and they tend to be the largest fish.
 
@@ -2378,7 +2384,6 @@ ctrout_clustered |>
     subtitle = "Number of fish sampled at each site"
   )
 ```
-
 
 I have no idea where he caught the fish.
 
